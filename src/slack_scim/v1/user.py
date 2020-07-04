@@ -215,20 +215,40 @@ class Manager:
 
 
 class UrnScimSchemasExtensionEnterprise10:
+    cost_center: Optional[str]
+    department: Optional[str]
+    division: Optional[str]
+    employee_number: Optional[str]
     manager: Optional[Manager]
+    organization: Optional[str]
 
-    def __init__(self, manager: Optional[Manager]) -> None:
+    def __init__(self, cost_center: Optional[str], department: Optional[str], division: Optional[str], employee_number: Optional[str], manager: Optional[Manager], organization: Optional[str]) -> None:
+        self.cost_center = cost_center
+        self.department = department
+        self.division = division
+        self.employee_number = employee_number
         self.manager = manager
+        self.organization = organization
 
     @staticmethod
     def from_dict(obj: Any) -> 'UrnScimSchemasExtensionEnterprise10':
         assert isinstance(obj, dict)
+        cost_center = from_union([from_str, from_none], obj.get("costCenter"))
+        department = from_union([from_str, from_none], obj.get("department"))
+        division = from_union([from_str, from_none], obj.get("division"))
+        employee_number = from_union([from_str, from_none], obj.get("employeeNumber"))
         manager = from_union([Manager.from_dict, from_none], obj.get("manager"))
-        return UrnScimSchemasExtensionEnterprise10(manager)
+        organization = from_union([from_str, from_none], obj.get("organization"))
+        return UrnScimSchemasExtensionEnterprise10(cost_center, department, division, employee_number, manager, organization)
 
     def to_dict(self) -> dict:
         result: dict = {}
+        result["costCenter"] = from_union([from_str, from_none], self.cost_center)
+        result["department"] = from_union([from_str, from_none], self.department)
+        result["division"] = from_union([from_str, from_none], self.division)
+        result["employeeNumber"] = from_union([from_str, from_none], self.employee_number)
         result["manager"] = from_union([lambda x: to_class(Manager, x), from_none], self.manager)
+        result["organization"] = from_union([from_str, from_none], self.organization)
         return result
 
 
