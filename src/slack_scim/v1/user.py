@@ -272,8 +272,9 @@ class User:
     title: Optional[str]
     urn_scim_schemas_extension_enterprise_10: Optional[UrnScimSchemasExtensionEnterprise10]
     user_name: Optional[str]
+    user_type: Optional[str]
 
-    def __init__(self, active: Optional[bool], addresses: Optional[List[Address]], display_name: Optional[str], emails: Optional[List[Email]], external_id: Optional[str], groups: Optional[List[Group]], id: Optional[str], meta: Optional[Meta], name: Optional[Name], nick_name: Optional[str], phone_numbers: Optional[List[Email]], photos: Optional[List[Photo]], profile_url: Optional[str], roles: Optional[List[Email]], schemas: Optional[List[str]], timezone: Optional[str], title: Optional[str], urn_scim_schemas_extension_enterprise_10: Optional[UrnScimSchemasExtensionEnterprise10], user_name: Optional[str]) -> None:
+    def __init__(self, active: Optional[bool], addresses: Optional[List[Address]], display_name: Optional[str], emails: Optional[List[Email]], external_id: Optional[str], groups: Optional[List[Group]], id: Optional[str], meta: Optional[Meta], name: Optional[Name], nick_name: Optional[str], phone_numbers: Optional[List[Email]], photos: Optional[List[Photo]], profile_url: Optional[str], roles: Optional[List[Email]], schemas: Optional[List[str]], timezone: Optional[str], title: Optional[str], urn_scim_schemas_extension_enterprise_10: Optional[UrnScimSchemasExtensionEnterprise10], user_name: Optional[str], user_type: Optional[str]) -> None:
         self.active = active
         self.addresses = addresses
         self.display_name = display_name
@@ -293,6 +294,7 @@ class User:
         self.title = title
         self.urn_scim_schemas_extension_enterprise_10 = urn_scim_schemas_extension_enterprise_10
         self.user_name = user_name
+        self.user_type = user_type
 
     @staticmethod
     def from_dict(obj: Any) -> 'User':
@@ -316,7 +318,8 @@ class User:
         title = from_union([from_str, from_none], obj.get("title"))
         urn_scim_schemas_extension_enterprise_10 = from_union([UrnScimSchemasExtensionEnterprise10.from_dict, from_none], obj.get("urn:scim:schemas:extension:enterprise:1.0"))
         user_name = from_union([from_str, from_none], obj.get("userName"))
-        return User(active, addresses, display_name, emails, external_id, groups, id, meta, name, nick_name, phone_numbers, photos, profile_url, roles, schemas, timezone, title, urn_scim_schemas_extension_enterprise_10, user_name)
+        user_type = from_union([from_str, from_none], obj.get("userType"))
+        return User(active, addresses, display_name, emails, external_id, groups, id, meta, name, nick_name, phone_numbers, photos, profile_url, roles, schemas, timezone, title, urn_scim_schemas_extension_enterprise_10, user_name, user_type)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -339,6 +342,7 @@ class User:
         result["title"] = from_union([from_str, from_none], self.title)
         result["urn:scim:schemas:extension:enterprise:1.0"] = from_union([lambda x: to_class(UrnScimSchemasExtensionEnterprise10, x), from_none], self.urn_scim_schemas_extension_enterprise_10)
         result["userName"] = from_union([from_str, from_none], self.user_name)
+        result["userType"] = from_union([from_str, from_none], self.user_type)
         return result
 
 
